@@ -1,4 +1,7 @@
-cmake_minimum_required (VERSION 3.0)
+if(POLICY CMP0048)
+    cmake_policy(SET CMP0048 NEW)
+endif()
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 project ("libiconv_cmake" VERSION 1.17.0)
 
@@ -325,7 +328,6 @@ SET(ICONV_CONST "const")
 # iconv.h
 SET(DLLVARIABLE "")
 SET(EILSEQ "84")
-SET(ICONV_CONST "const")
 SET(USE_MBSTATE_T "0")
 SET(BROKEN_WCHAR_H "0")
 SET(HAVE_WCHAR_T "1")
@@ -339,7 +341,6 @@ CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/include/localcharset.h.in
 if (USE_SHARED_LIB)
     add_definitions(-DLIBICONV_SHARED_BUILD)
 endif()
-
 
 IF (WIN32)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
@@ -356,6 +357,7 @@ IF (MSVC)
     add_definitions(/wd4267)
 ENDIF (MSVC)
 
+add_definitions(-DICONV_CONST=${ICONV_CONST})
 add_definitions(-DICONV_NO_LIBDIR)
 add_definitions(-DLIBDIR)
  
@@ -372,8 +374,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 # Build
 
 if (USE_SHARED_LIB)
-   set_target_properties(iconv PROPERTIES VERSION ${LIBICONV_VERSION} SOVERSION ${LIBICONV_SOVERSION})
    add_library(iconv lib/iconv.c libcharset/lib/localcharset.c)
+   set_target_properties(iconv PROPERTIES VERSION ${LIBICONV_VERSION} SOVERSION ${LIBICONV_SOVERSION})
 else()
    add_library(iconv STATIC lib/iconv.c libcharset/lib/localcharset.c)
    set_target_properties(iconv PROPERTIES INTERFACE_COMPILE_DEFINITIONS "LIBICONV_STATIC")
@@ -384,8 +386,6 @@ target_include_directories(iconv
         $<INSTALL_INTERFACE:include>
     )
     
-
-
 # Install
 install(FILES 
 	${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h

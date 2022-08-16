@@ -9,7 +9,19 @@
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
-      "ctestCommandArgs": ""
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "VCPKG_APPLOCAL_DEPS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "VCPKG_SETUP_CMAKE_PROGRAM_PATH",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
     },
     {
       "name": "x64-Release",
@@ -21,7 +33,18 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "variables": [
+        {
+          "name": "VCPKG_SETUP_CMAKE_PROGRAM_PATH",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "VCPKG_APPLOCAL_DEPS",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
     }
   ]
 }
