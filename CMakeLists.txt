@@ -332,7 +332,7 @@ SET(USE_MBSTATE_T "0")
 SET(BROKEN_WCHAR_H "0")
 SET(HAVE_WCHAR_T "1")
 
-CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/config-cmake.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/include/iconv.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h @ONLY)
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/include/libcharset.h.in ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h)
 CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/include/localcharset.h.in ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h)
@@ -357,7 +357,6 @@ IF (MSVC)
     add_definitions(/wd4267)
 ENDIF (MSVC)
 
-add_definitions(-DICONV_CONST=${ICONV_CONST})
 add_definitions(-DICONV_NO_LIBDIR)
 add_definitions(-DLIBDIR)
  
