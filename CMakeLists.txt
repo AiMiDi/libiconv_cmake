@@ -391,16 +391,16 @@ target_include_directories(iconv
     
 # Install
 install(FILES 
-	${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h
-	DESTINATION include
+	"${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h"
+	DESTINATION "include/libiconv"
 	)
 
 install(TARGETS iconv
     EXPORT Targets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    RUNTIME DESTINATION bin
-    INCLUDES DESTINATION include
+    LIBRARY DESTINATION "lib"
+    ARCHIVE DESTINATION "lib"
+    RUNTIME DESTINATION "bin"
+    INCLUDES DESTINATION "include/libiconv"
     )
 
 
