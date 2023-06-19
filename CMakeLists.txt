@@ -1,406 +1,568 @@
-if(POLICY CMP0048)
-    cmake_policy(SET CMP0048 NEW)
-endif()
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
-
-project ("libiconv_cmake" VERSION 1.17.0)
-
-option(USE_SHARED_LIB "use shared lib" OFF)
-
-INCLUDE (CheckIncludeFiles)
-INCLUDE (CheckFunctionExists)
-INCLUDE (CheckLibraryExists) 
-INCLUDE (CheckTypeSize) 
-INCLUDE (CheckSymbolExists)
-
-# Define to the number of bits in type 'ptrdiff_t'.
-CHECK_TYPE_SIZE("ptrdiff_t" SIZEOF_PTRDIFF_T)
-IF (SIZEOF_PTRDIFF_T)
-SET(BITSIZEOF_PTRDIFF_T "(${SIZEOF_PTRDIFF_T}*8)")
-ENDIF (SIZEOF_PTRDIFF_T)
-
-# Define to the number of bits in type 'sig_atomic_t'. 
-CHECK_TYPE_SIZE("sig_atomic_t" SIZEOF_SIG_ATOMIC_T)
-IF (SIZEOF_SIG_ATOMIC_T)
-SET(BITSIZEOF_SIG_ATOMIC_T "(${SIZEOF_SIG_ATOMIC_T}*8)")
-ENDIF (SIZEOF_SIG_ATOMIC_T)
-
-# Define to the number of bits in type 'size_t'.
-CHECK_TYPE_SIZE("size_t" SIZEOF_SIZE_T)
-IF (SIZEOF_SIZE_T)
-SET(BITSIZEOF_SIZE_T "(${SIZEOF_SIZE_T}*8)")
-ENDIF (SIZEOF_SIZE_T)
-
-# Define to the number of bits in type 'wchar_t'.
-CHECK_TYPE_SIZE("wchar_t" SIZEOF_WCHAR_T)
-IF (SIZEOF_WCHAR_T)
-SET(BITSIZEOF_WCHAR_T "(${SIZEOF_WCHAR_T}*8)")
-ENDIF (SIZEOF_WCHAR_T)
-
-# Define to the number of bits in type 'wint_t'.
-CHECK_TYPE_SIZE("wint_t" SIZEOF_WINT_T)
-IF (SIZEOF_WINT_T)
-SET(BITSIZEOF_WINT_T "(${SIZEOF_WINT_T}*8)")
-ENDIF (SIZEOF_WINT_T)
-
-# Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
-# systems. This function is required for `alloca.c' support on those systems.
-SET(CRAY_STACKSEG_END OFF)
-
-# Define to 1 if using `alloca.c'.
-UNSET(C_ALLOCA)
-
-# Define as good substitute value for EILSEQ. 
-SET(EILSEQ 84)
-
-# Define to 1 to enable a few rarely used encodings.
-UNSET(ENABLE_EXTRA)
-
-# Define to 1 if translation of program messages to the user's native
-# language is requested.
-UNSET(ENABLE_NLS)
-
-# Define to 1 if the package shall run at any location in the filesystem. 
-SET(ENABLE_RELOCATABLE ON)
-#UNSET(ENABLE_RELOCATABLE)
-
-# Define to 1 when using the gnulib module canonicalize-lgpl.
-UNSET(GNULIB_CANONICALIZE_LGPL) 
-
-# Define to 1 when using the gnulib module sigpipe.
-UNSET(GNULIB_SIGPIPE) 
-
-# Define to 1 if you have `alloca', as a function or macro.
-CHECK_FUNCTION_EXISTS(alloca HAVE_ALLOCA)
-
-# Define to 1 if you have <alloca.h> and it should be used (not on Ultrix).
-CHECK_INCLUDE_FILES(alloca.h HAVE_ALLOCA_H)
-
-# Define to 1 if you have the `canonicalize_file_name' function.
-CHECK_FUNCTION_EXISTS(canonicalize_file_name HAVE_CANONICALIZE_FILE_NAME)
-
-# Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
-# CoreFoundation framework. 
-CHECK_FUNCTION_EXISTS(CFLocaleCopyCurrent HAVE_CFLOCALECOPYCURRENT)
-
-# Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
-# the CoreFoundation framework.
-CHECK_FUNCTION_EXISTS(CoreFoundation HAVE_CFPREFERENCESCOPYAPPVALUE)
-
-# Define if the GNU dcgettext() function is already present or preinstalled.
-CHECK_FUNCTION_EXISTS(dcgettext HAVE_DCGETTEXT)
-
-# Define to 1 if you have the declaration of `canonicalize_file_name', and to
-# 0 if you don't. 
-CHECK_FUNCTION_EXISTS(canonicalize_file_name HAVE_DECL_CANONICALIZE_FILE_NAME)
-
-# Define to 1 if you have the declaration of `clearerr_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(clearerr_unlocked HAVE_DECL_CLEARERR_UNLOCKED)
-
-# Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
-# don't.
-CHECK_FUNCTION_EXISTS(feof_unlocked HAVE_DECL_FEOF_UNLOCKED)
-
-# Define to 1 if you have the declaration of `ferror_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(ferror_unlocked HAVE_DECL_FERROR_UNLOCKED)
-
-# Define to 1 if you have the declaration of `fflush_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(fflush_unlocked HAVE_DECL_FFLUSH_UNLOCKED)
-
-# Define to 1 if you have the declaration of `fgets_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(fgets_unlocked HAVE_DECL_FGETS_UNLOCKED)
-
-# Define to 1 if you have the declaration of `fputc_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(fputc_unlocked HAVE_DECL_FPUTC_UNLOCKED)
-
-# Define to 1 if you have the declaration of `fputs_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(fputs_unlocked HAVE_DECL_FPUTS_UNLOCKED)
-
-# Define to 1 if you have the declaration of `fread_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(fread_unlocked HAVE_DECL_FREAD_UNLOCKED)
-
-# Define to 1 if you have the declaration of `fwrite_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(fwrite_unlocked HAVE_DECL_FWRITE_UNLOCKED)
-
-# Define to 1 if you have the declaration of `getchar_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(getchar_unlocked HAVE_DECL_GETCHAR_UNLOCKED)
-
-# Define to 1 if you have the declaration of `getc_unlocked', and to 0 if you
-# don't. 
-CHECK_FUNCTION_EXISTS(getc_unlocked HAVE_DECL_GETC_UNLOCKED)
-
-# Define to 1 if you have the declaration of `putchar_unlocked', and to 0 if
-# you don't. 
-CHECK_FUNCTION_EXISTS(putchar_unlocked HAVE_DECL_PUTCHAR_UNLOCKED)
-
-# Define to 1 if you have the declaration of `putc_unlocked', and to 0 if you
-# don't. 
-CHECK_FUNCTION_EXISTS(putc_unlocked HAVE_DECL_PUTC_UNLOCKED)
-
-# Define to 1 if you have the declaration of `strerror', and to 0 if you
-# don't. 
-CHECK_FUNCTION_EXISTS(strerror HAVE_DECL_STRERROR)
-
-# Define to 1 if you have the declaration of `strerror_r', and to 0 if you
-# don't. 
-CHECK_FUNCTION_EXISTS(strerror_r HAVE_DECL_STRERROR_R)
-
-# Define to 1 if you have the <dlfcn.h> header file. 
-CHECK_INCLUDE_FILES(dlfcn.h HAVE_DLFCN_H)
-
-# Define if you have the declaration of environ. 
-CHECK_FUNCTION_EXISTS(environ HAVE_ENVIRON_DECL)
-
-# Define to 1 if you have the <errno.h> header file. 
-CHECK_INCLUDE_FILES(errno.h HAVE_ERRNO_H)
-
-# Define to 1 if you have the `getcwd' function. 
-CHECK_FUNCTION_EXISTS(getcwd HAVE_GETCWD)
-
-# Define to 1 if you have the `getc_unlocked' function. 
-CHECK_FUNCTION_EXISTS(getc_unlocked HAVE_GETC_UNLOCKED)
-
-# Define if the GNU gettext() function is already present or preinstalled. 
-CHECK_FUNCTION_EXISTS(gettext HAVE_GETTEXT)
-
-# Define if you have the iconv() function and it works. 
-SET(HAVE_ICONV ON)
-
-# Define to 1 if you have the <inttypes.h> header file. 
-CHECK_INCLUDE_FILES(inttypes.h HAVE_INTTYPES_H)
-
-# Define if you have <langinfo.h> and nl_langinfo(CODESET). 
-CHECK_INCLUDE_FILES(langinfo.h HAVE_LANGINFO_CODESET)
-
-# Define to 1 if the system has the type `long long int'. 
-CHECK_TYPE_SIZE("long long int" HAVE_LONG_LONG_INT)
-
-# Define to 1 if you have the <mach-o/dyld.h> header file. 
-CHECK_INCLUDE_FILES(mach-o/dyld.h HAVE_MACH_O_DYLD_H)
-
-# Define if the 'malloc' function is POSIX compliant. 
-IF (WIN32)
-UNSET(HAVE_MALLOC_POSIX)
-ELSE (WIN32)
-SET(HAVE_MALLOC_POSIX ON)
-ENDIF (WIN32)
-
-# Define to 1 if you have the `mbrtowc' function. 
-CHECK_FUNCTION_EXISTS(mbrtowc HAVE_MBRTOWC)
-
-# Define to 1 if you have the `mbsinit' function. 
-CHECK_FUNCTION_EXISTS(mbsinit HAVE_MBSINIT)
-
-# Define to 1 if <wchar.h> declares mbstate_t. 
-CHECK_SYMBOL_EXISTS(mbstate_t wchar.h HAVE_MBSTATE_T)
-
-# Define to 1 if you have the `memmove' function. 
-CHECK_FUNCTION_EXISTS(memmove HAVE_MEMMOVE)
-
-# Define to 1 if you have the <memory.h> header file. 
-CHECK_INCLUDE_FILES(memory.h HAVE_MEMORY_H)
-
-# Define to 1 if you have the `pathconf' function. 
-CHECK_FUNCTION_EXISTS(pathconf HAVE_PATHCONF)
-
-# Define to 1 if you have the <random.h> header file. 
-CHECK_INCLUDE_FILES(random.h HAVE_RANDOM_H)
-
-# Define to 1 if you have the `readlink' function. 
-CHECK_FUNCTION_EXISTS(readlink HAVE_READLINK)
-
-# Define to 1 if you have the <search.h> header file. 
-CHECK_INCLUDE_FILES(search.h HAVE_SEARCH_H)
-
-# Define to 1 if you have the `setenv' function. 
-CHECK_FUNCTION_EXISTS(setenv HAVE_SETENV)
-
-# Define to 1 if you have the `setlocale' function. 
-CHECK_FUNCTION_EXISTS(setlocale HAVE_SETLOCALE)
-
-# Define to 1 if you have the <signal.h> header file. 
-CHECK_INCLUDE_FILES(signal.h HAVE_SIGNAL_H)
-
-# Define to 1 if 'sig_atomic_t' is a signed integer type. 
-SET(HAVE_SIGNED_SIG_ATOMIC_T 0)
-
-# Define to 1 if 'wchar_t' is a signed integer type. 
-SET(HAVE_SIGNED_WCHAR_T 0)
-
-# Define to 1 if 'wint_t' is a signed integer type. 
-SET(HAVE_SIGNED_WINT_T 0)
-
-# Define to 1 if the system has the type `sigset_t'. 
-CHECK_SYMBOL_EXISTS(sigset_t signal.h HAVE_SIGSET_T)
-
-# Define to 1 if stdbool.h conforms to C99. 
-CHECK_INCLUDE_FILES(stdbool.h HAVE_STDBOOL_H)
-
-# Define to 1 if you have the <stdint.h> header file. 
-CHECK_INCLUDE_FILES(stdint.h HAVE_STDINT_H)
-
-# Define to 1 if you have the <stdio.h> header file. 
-CHECK_INCLUDE_FILES(stdio.h HAVE_STDIO_H)
-
-# Define to 1 if you have the <stdlib.h> header file. 
-CHECK_INCLUDE_FILES(stdlib.h HAVE_STDLIB_H)
-
-# Define to 1 if you have the `strerror_r' function. 
-CHECK_INCLUDE_FILES(strerror_r HAVE_STRERROR_R)
-
-# Define to 1 if you have the <strings.h> header file. 
-CHECK_INCLUDE_FILES(strings.h HAVE_STRINGS_H)
-
-# Define to 1 if you have the <string.h> header file. 
-CHECK_INCLUDE_FILES(string.h HAVE_STRING_H)
-
-# Define to 1 if the system has the type `struct random_data'. 
-UNSET(HAVE_STRUCT_RANDOM_DATA)
-
-# Define to 1 if you have the <sys/bitypes.h> header file. 
-CHECK_INCLUDE_FILES(sys/bitypes.h HAVE_SYS_BITYPES_H)
-
-# Define to 1 if you have the <sys/inttypes.h> header file. 
-CHECK_INCLUDE_FILES(sys/inttypes.h HAVE_SYS_INTTYPES_H)
-
-# Define to 1 if you have the <sys/param.h> header file. 
-CHECK_INCLUDE_FILES(sys/param.h HAVE_SYS_PARAM_H)
-
-# Define to 1 if you have the <sys/socket.h> header file. 
-CHECK_INCLUDE_FILES(sys/socket.h HAVE_SYS_SOCKET_H)
-
-# Define to 1 if you have the <sys/stat.h> header file. 
-CHECK_INCLUDE_FILES(sys/stat.h HAVE_SYS_STAT_H)
-
-# Define to 1 if you have the <sys/types.h> header file. 
-CHECK_INCLUDE_FILES(sys/types.h HAVE_SYS_TYPES_H)
-
-# Define to 1 if you have the `tsearch' function. 
-CHECK_FUNCTION_EXISTS(tsearch HAVE_TSEARCH)
-
-# Define to 1 if you have the <unistd.h> header file. 
-CHECK_INCLUDE_FILES(unistd.h HAVE_UNISTD_H)
-
-# Define to 1 if the system has the type `unsigned long long int'. 
-CHECK_TYPE_SIZE("unsigned long long int" HAVE_UNSIGNED_LONG_LONG_INT)
-
-# Define to 1 or 0, depending whether the compiler supports simple visibility
-# declarations. 
-SET(HAVE_VISIBILITY 0)
-
-# Define to 1 if you have the <wchar.h> header file. 
-CHECK_INCLUDE_FILES(wchar.h HAVE_WCHAR_H)
-
-# Define if you have the 'wchar_t' type. 
-CHECK_SYMBOL_EXISTS(wchar_t wchar.h HAVE_WCHAR_T)
-
-# Define to 1 if you have the `wcrtomb' function. 
-CHECK_FUNCTION_EXISTS(wcrtomb HAVE_WCRTOMB)
-
-# Define to 1 if you have the <winsock2.h> header file. 
-IF (WIN32)
-SET(HAVE_WINSOCK2_H ON)
-ELSE (WIN32)
-UNSET(HAVE_WINSOCK2_H)
-ENDIF (WIN32)
-
-# Define if you have the 'wint_t' type. 
-CHECK_TYPE_SIZE("wint_t" HAVE_WINT_T)
-
-# Define to 1 if the system has the type `_Bool'. 
-CHECK_TYPE_SIZE(_Bool HAVE__BOOL)
-
-# Define to 1 if you have the `_NSGetExecutablePath' function. 
-CHECK_FUNCTION_EXISTS(_NSGetExecutablePath HAVE__NSGETEXECUTABLEPATH)
-
-# Define as const if the declaration of iconv() needs const. 
-SET(ICONV_CONST "const")
-
-# iconv.h
-SET(DLLVARIABLE "")
-SET(EILSEQ "84")
-SET(USE_MBSTATE_T "0")
-SET(BROKEN_WCHAR_H "0")
-SET(HAVE_WCHAR_T "1")
-
-CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/config-cmake.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/include/iconv.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h @ONLY)
-CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/include/libcharset.h.in ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h)
-CONFIGURE_FILE( ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/include/localcharset.h.in ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h)
-
-# Definitions
-if (USE_SHARED_LIB)
-    add_definitions(-DLIBICONV_SHARED_BUILD)
+#  Copyright (C) 1999-2023 Markus Rickert, Aimidi.
+#  This file is part of the GNU LIBICONV Library.
+#
+#  The GNU LIBICONV Library is free software; you can redistribute it
+#  and/or modify it under the terms of the GNU Lesser General Public
+#  License as published by the Free Software Foundation; either version 2.1
+#  of the License, or (at your option) any later version.
+#
+#  The GNU LIBICONV Library is distributed in the hope that it will be
+#  useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#  Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public
+#  License along with the GNU LIBICONV Library; see the file COPYING.LIB.
+#  If not, see <https://www.gnu.org/licenses/>.  */
+
+
+cmake_minimum_required(VERSION 3.2)
+
+project(libiconv C)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include(CheckCCompilerFlag)
+include(CheckCSourceCompiles)
+include(CheckCSourceRuns)
+include(CheckFunctionExists)
+include(CheckIncludeFiles)
+include(CheckSymbolExists)
+include(CheckTypeSize)
+include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
+include(TestBigEndian)
+
+set(LIBCHARSET_VERSION_MAJOR 1)
+set(LIBCHARSET_VERSION_MINOR 5)
+set(LIBCHARSET_VERSION ${LIBCHARSET_VERSION_MAJOR}.${LIBCHARSET_VERSION_MINOR})
+
+set(LIBCHARSET_SOVERSION_MAJOR 1)
+set(LIBCHARSET_SOVERSION_MINOR 0)
+set(LIBCHARSET_SOVERSION_PATCH 0)
+set(LIBCHARSET_SOVERSION ${LIBCHARSET_SOVERSION_MAJOR}.${LIBCHARSET_SOVERSION_MINOR}.${LIBCHARSET_SOVERSION_PATCH})
+
+set(LIBICONV_VERSION_MAJOR 1)
+set(LIBICONV_VERSION_MINOR 17)
+set(LIBICONV_VERSION ${LIBICONV_VERSION_MAJOR}.${LIBICONV_VERSION_MINOR})
+
+set(LIBICONV_SOVERSION_MAJOR 2)
+set(LIBICONV_SOVERSION_MINOR 6)
+set(LIBICONV_SOVERSION_PATCH 1)
+set(LIBICONV_SOVERSION ${LIBICONV_SOVERSION_MAJOR}.${LIBICONV_SOVERSION_MINOR}.${LIBICONV_SOVERSION_PATCH})
+
+if(NOT GPERF_PROJECT_PATH)
+	set(GPERF_PROJECT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gperf)
 endif()
 
-IF (WIN32)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    add_definitions(-D_WIN32_NATIVE)
-ENDIF (WIN32)
-
-IF (MSVC)
-    add_definitions(/wd4018)
-    add_definitions(/wd4273)
-    add_definitions(/wd4090)
-    add_definitions(/wd4013)
-    add_definitions(/wd4244)
-    add_definitions(/wd4311)
-    add_definitions(/wd4267)
-ENDIF (MSVC)
-
-add_definitions(-DICONV_NO_LIBDIR)
-add_definitions(-DLIBDIR)
- 
-# Includes
-include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/srclib ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/libcharset/include ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/include ${CMAKE_CURRENT_SOURCE_DIR}/libcharset/lib)  
-
-IF (WIN32)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/msvc)
-ENDIF (WIN32)
-
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
-
-# Build
-
-if (NOT DEFINED CMAKE_DEBUG_POSTFIX)
-  set(CMAKE_DEBUG_POSTFIX "_Debug")
+if(NOT ICONV_PROJECT_PATH)
+	set(ICONV_PROJECT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/libiconv)
 endif()
 
-if (USE_SHARED_LIB)
-   add_library(iconv lib/iconv.c libcharset/lib/localcharset.c)
-   set_target_properties(iconv PROPERTIES VERSION ${LIBICONV_VERSION} SOVERSION ${LIBICONV_SOVERSION} DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}")
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(LIBICONV_BUILD_DOCUMENTATION "Build documentation" OFF)
+option(LIBICONV_ENABLE_EXTRA "Enable a few rarely used encodings" OFF)
+option(LIBICONV_ENABLE_NLS "Translate program messages to user's native language" OFF)
+option(LIBICONV_ENABLE_RELOCATABLE "Install a package that can be moved in the file system" ON)
+
+if(NOT TARGET gperf::gperf)
+	find_package(Gperf CONFIG)
+	if(NOT TARGET gperf::gperf)
+		add_subdirectory(gperf)
+	endif()
+endif()
+
+check_symbol_exists(EILSEQ "errno.h" HAVE_EILSEQ)
+if(NOT HAVE_EILSEQ)
+	set(EILSEQ "ENOENT")
+endif()
+set(ENABLE_EXTRA ${LIBICONV_ENABLE_EXTRA})
+set(ENABLE_NLS ${LIBICONV_ENABLE_NLS})
+set(ENABLE_RELOCATABLE ${LIBICONV_ENABLE_RELOCATABLE})
+check_function_exists(iconv HAVE_ICONV)
+check_c_source_compiles("
+	#include <langinfo.h>
+	int main() { char* cs = nl_langinfo(CODESET); return !cs; }
+" HAVE_LANGINFO_CODESET)
+check_function_exists(mbrtowc HAVE_MBRTOWC)
+check_function_exists(mbsinit HAVE_MBSINIT)
+check_c_compiler_flag("-fvisibility=hidden -Werror" HAVE_VISIBILITY)
+check_type_size(wchar_t WCHAR_T)
+check_function_exists(wcrtomb HAVE_WCRTOMB)
+check_c_source_compiles("
+	#include <stdlib.h>
+	#include <iconv.h>
+	extern
+	#ifdef __cplusplus
+	\"C\"
+	#endif
+	#if defined(__STDC__) || defined(__cplusplus)
+	size_t iconv(iconv_t cd, char** inbuf, size_t* inbytesleft, char** outbuf, size_t* outbytesleft);
+	#else
+	size_t iconv();
+	#endif
+	int main() { return 0; }
+" ICONV_CONST_TEST)
+if(NOT ICONV_CONST_TEST)
+	set(ICONV_CONST "const")
+endif()
+set(INSTALLPREFIX ${CMAKE_INSTALL_PREFIX})
+test_big_endian(WORDS_BIGENDIAN)
+if(WORDS_BIGENDIAN)
+	set(WORDS_LITTLEENDIAN OFF)
 else()
-   add_library(iconv STATIC lib/iconv.c libcharset/lib/localcharset.c)
-   set_target_properties(iconv PROPERTIES INTERFACE_COMPILE_DEFINITIONS "LIBICONV_STATIC" DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}")
+	set(WORDS_LITTLEENDIAN ON)
+endif()
+check_type_size("size_t" SIZE_T)
+if(NOT HAVE_SIZE_T)
+	set(size_t "unsigned int")
 endif()
 
-target_include_directories(iconv
-    PUBLIC
-        $<INSTALL_INTERFACE:include>
-    )
-    
-# Install
-install(FILES 
-	"${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h"
-	DESTINATION "include/libiconv"
+set(PACKAGE "libicharset")
+set(PACKAGE_BUGREPORT "bug-gnu-libiconv@gnu.org")
+set(PACKAGE_NAME "libicharset")
+set(PACKAGE_STRING "libicharset ${LIBCHARSET_VERSION}")
+set(PACKAGE_TARNAME "libicharset")
+set(PACKAGE_URL "https://www.gnu.org/software/libiconv/")
+set(PACKAGE_VERSION ${LIBCHARSET_VERSION})
+
+configure_file(config.h.cmake.in libcharset/config.h @ONLY)
+
+set(PACKAGE "libiconv")
+set(PACKAGE_BUGREPORT "bug-gnu-libiconv@gnu.org")
+set(PACKAGE_NAME "libiconv")
+set(PACKAGE_STRING "libiconv ${LIBICONV_VERSION}")
+set(PACKAGE_TARNAME "libiconv")
+set(PACKAGE_URL "https://www.gnu.org/software/libiconv/")
+set(PACKAGE_VERSION ${LIBICONV_VERSION})
+
+configure_file(config.h.cmake.in config.h @ONLY)
+
+if(HAVE_VISIBILTY)
+	set(HAVE_VISIBILITY 1)
+else()
+	set(HAVE_VISIBILITY 0)
+endif()
+
+if(HAVE_WCHAR_T)
+	set(BROKEN_WCHAR_H 0)
+	set(HAVE_WCHAR_T 1)
+else()
+	set(BROKEN_WCHAR_H 1)
+	set(HAVE_WCHAR_T 0)
+endif()
+
+if(HAVE_WCRTOMB OR HAVE_MBRTOWC)
+	set(USE_MBSTATE_T 1)
+else()
+	set(USE_MBSTATE_T 0)
+endif()
+
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+
+function(genaliases SUFFIX DEFINITIONS)
+	add_executable(genaliases${SUFFIX} ${ICONV_PROJECT_PATH}/lib/genaliases.c ${ICONV_PROJECT_PATH}/lib/encodings.def ${ICONV_PROJECT_PATH}/lib/encodings_local.def)
+	target_compile_definitions(genaliases${SUFFIX} PRIVATE ${DEFINITIONS})
+	add_custom_command(
+		OUTPUT lib/aliases${SUFFIX}.gperf lib/canonical${SUFFIX}.sh lib/canonical_local${SUFFIX}.sh
+		COMMAND genaliases${SUFFIX} ${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.gperf ${CMAKE_CURRENT_BINARY_DIR}/lib/canonical${SUFFIX}.sh ${CMAKE_CURRENT_BINARY_DIR}/lib/canonical_local${SUFFIX}.sh
+		DEPENDS genaliases${SUFFIX}
 	)
+	add_custom_command(
+		OUTPUT lib/aliases${SUFFIX}.tmp
+		COMMAND gperf::gperf -m 10 --output-file=${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.tmp ${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.gperf
+		DEPENDS lib/aliases${SUFFIX}.gperf
+	)
+	add_custom_command(
+		OUTPUT lib/aliases${SUFFIX}.h
+		COMMAND ${CMAKE_COMMAND} -DINPUT_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.tmp -DOUTPUT_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.h -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gperf-static.cmake
+		DEPENDS cmake/gperf-static.cmake lib/aliases${SUFFIX}.tmp
+	)
+	add_custom_command(
+		OUTPUT lib/canonical${SUFFIX}.h
+		COMMAND ${CMAKE_COMMAND} -DPATTERNS_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/canonical${SUFFIX}.sh -DINPUT_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.h -DOUTPUT_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/canonical${SUFFIX}.h -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/genaliases.cmake
+		DEPENDS cmake/genaliases.cmake lib/aliases${SUFFIX}.h lib/canonical${SUFFIX}.sh
+	)
+	add_custom_command(
+		OUTPUT lib/canonical_local${SUFFIX}.h
+		COMMAND ${CMAKE_COMMAND} -DPATTERNS_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/canonical_local${SUFFIX}.sh -DINPUT_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/aliases${SUFFIX}.h -DOUTPUT_FILENAME=${CMAKE_CURRENT_BINARY_DIR}/lib/canonical_local${SUFFIX}.h -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/genaliases.cmake
+		DEPENDS cmake/genaliases.cmake lib/aliases${SUFFIX}.h lib/canonical_local${SUFFIX}.sh
+	)
+endfunction()
 
-install(TARGETS iconv
-    EXPORT Targets
-    LIBRARY DESTINATION "lib"
-    ARCHIVE DESTINATION "lib"
-    RUNTIME DESTINATION "bin"
-    INCLUDES DESTINATION "include/libiconv"
-    )
+genaliases("" "")
+genaliases("_sysaix" "USE_AIX_ALIASES")
+genaliases("_syshpux" "USE_HPUX_ALIASES")
+genaliases("_sysosf1" "USE_OSF1_ALIASES")
+genaliases("_syssolaris" "USE_SOLARIS_ALIASES")
 
+function(genaliases2 SUFFIX TAG DEFINITIONS DEPENDENCIES)
+	add_executable(genaliases${SUFFIX} ${ICONV_PROJECT_PATH}/lib/genaliases2.c ${DEPENDENCIES})
+	target_compile_definitions(genaliases${SUFFIX} PRIVATE ${DEFINITIONS})
+	add_custom_command(
+		OUTPUT lib/aliases${SUFFIX}.h lib/canonical${SUFFIX}.h
+		COMMAND genaliases${SUFFIX} ${TAG} ${ICONV_PROJECT_PATH}/lib/aliases${SUFFIX}.h ${ICONV_PROJECT_PATH}/lib/canonical${SUFFIX}.h
+		DEPENDS genaliases${SUFFIX}
+	)
+endfunction()
 
+genaliases2("_aix" "aix" "USE_AIX" ${ICONV_PROJECT_PATH}/lib/encodings_aix.def)
+genaliases2("_aix_sysaix" "aix" "USE_AIX;USE_AIX_ALIASES" ${ICONV_PROJECT_PATH}/lib/encodings_aix.def)
+genaliases2("_osf1" "osf1" "USE_OSF1" ${ICONV_PROJECT_PATH}/lib/encodings_osf1.def)
+genaliases2("_osf1_sysosf1" "osf1" "USE_OSF1;USE_OSF1_ALIASES" ${ICONV_PROJECT_PATH}/lib/encodings_osf1.def)
+genaliases2("_dos" "dos" "USE_DOS" ${ICONV_PROJECT_PATH}/lib/encodings_dos.def)
+genaliases2("_zos" "zos" "USE_ZOS" ${ICONV_PROJECT_PATH}/lib/encodings_zos.def)
+genaliases2("_extra" "extra" "USE_EXTRA" ${ICONV_PROJECT_PATH}/lib/encodings_extra.def)
+
+add_executable(genflags ${ICONV_PROJECT_PATH}/lib/converters.h ${ICONV_PROJECT_PATH}/lib/encodings.def ${ICONV_PROJECT_PATH}/lib/encodings_aix.def ${ICONV_PROJECT_PATH}/lib/encodings_dos.def ${ICONV_PROJECT_PATH}/lib/encodings_zos.def ${ICONV_PROJECT_PATH}/lib/encodings_extra.def ${ICONV_PROJECT_PATH}/lib/encodings_osf1.def ${ICONV_PROJECT_PATH}/lib/genflags.c)
+add_custom_command(
+	OUTPUT lib/flags.h
+	COMMAND genflags > lib/flags.h
+	DEPENDS ${ICONV_PROJECT_PATH}/lib/converters.h ${ICONV_PROJECT_PATH}/lib/encodings.def ${ICONV_PROJECT_PATH}/lib/encodings_aix.def ${ICONV_PROJECT_PATH}/lib/encodings_dos.def ${ICONV_PROJECT_PATH}/lib/encodings_zos.def ${ICONV_PROJECT_PATH}/lib/encodings_extra.def ${ICONV_PROJECT_PATH}/lib/encodings_osf1.def ${ICONV_PROJECT_PATH}/lib/genflags.c
+)
+
+add_executable(gentranslit ${ICONV_PROJECT_PATH}/lib/gentranslit.c ${ICONV_PROJECT_PATH}/lib/translit.def)
+add_custom_command(
+	OUTPUT lib/translit.h
+	COMMAND gentranslit < ${ICONV_PROJECT_PATH}/lib/translit.def > lib/translit.h
+	DEPENDS ${ICONV_PROJECT_PATH}/lib/gentranslit.c ${ICONV_PROJECT_PATH}/lib/translit.def
+)
+
+file(READ ${ICONV_PROJECT_PATH}/libcharset/include/export.h LIBCHARSET_EXPORT_H)
+
+file(READ ${ICONV_PROJECT_PATH}/libcharset/include/libcharset.h.in LIBCHARSET_H_IN)
+string(REGEX REPLACE "extern ([^\"])" "extern LIBCHARSET_DLL_EXPORTED \\1" LIBCHARSET_H_IN "${LIBCHARSET_H_IN}")
+string(REGEX REPLACE "(#define _LIBCHARSET_H[^\n]*\n)" "\\1${LIBCHARSET_EXPORT_H}" LIBCHARSET_H_IN "${LIBCHARSET_H_IN}")
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h.build.in "${LIBCHARSET_H_IN}")
+
+file(READ ${ICONV_PROJECT_PATH}/libcharset/include/localcharset.h.in LOCALCHARSET_H_IN)
+string(REGEX REPLACE "extern ([^\"])" "extern LIBCHARSET_DLL_EXPORTED \\1" LOCALCHARSET_H_IN "${LOCALCHARSET_H_IN}")
+string(REGEX REPLACE "(#define _LOCALCHARSET_H[^\n]*\n)" "\\1${LIBCHARSET_EXPORT_H}" LOCALCHARSET_H_IN "${LOCALCHARSET_H_IN}")
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h.build.in "${LOCALCHARSET_H_IN}")
+
+configure_file(${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h.build.in libcharset/include/libcharset.h @ONLY)
+configure_file(${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h.build.in libcharset/include/localcharset.h @ONLY)
+
+file(READ ${ICONV_PROJECT_PATH}/include/export.h EXPORT_H)
+
+file(READ ${ICONV_PROJECT_PATH}/include/iconv.h.in ICONV_H_IN)
+string(REGEX REPLACE "extern ([^\"])" "extern LIBICONV_DLL_EXPORTED \\1" ICONV_H_IN "${ICONV_H_IN}")
+string(REGEX REPLACE "(_LIBICONV_VERSION[^\n]*\n)" "\\1${EXPORT_H}" ICONV_H_IN "${ICONV_H_IN}")
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h.build.in "${ICONV_H_IN}")
+
+configure_file(${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h.build.in include/iconv.h @ONLY)
+
+if(BUILD_SHARED_LIBS AND MSVC)
+	set(DLL_VARIABLE "__declspec (dllimport)")
+endif()
+
+configure_file(${ICONV_PROJECT_PATH}/libcharset/include/libcharset.h.in ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h.inst @ONLY)
+configure_file(${ICONV_PROJECT_PATH}/libcharset/include/localcharset.h.in ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h.inst @ONLY)
+configure_file(${ICONV_PROJECT_PATH}/include/iconv.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h.inst @ONLY)
+
+add_library(
+	Charset
+	${ICONV_PROJECT_PATH}/libcharset/lib/localcharset.c
+	${ICONV_PROJECT_PATH}/libcharset/lib/relocatable-stub.c
+)
+
+target_compile_definitions(
+	Charset
+	PRIVATE
+	BUILDING_LIBCHARSET
+	HAVE_CONFIG_H
+	IN_LIBRARY
+	INSTALLDIR="${CMAKE_INSTALL_LIBDIR}"
+	LIBDIR="${CMAKE_INSTALL_LIBDIR}"
+	NO_XMALLOC
+	relocate=libcharset_relocate
+	set_relocation_prefix=libcharset_set_relocation_prefix
+)
+
+if(BUILD_SHARED_LIBS)
+	target_compile_definitions(Charset PRIVATE BUILDING_DLL)
+endif()
+
+target_include_directories(
+	Charset
+	PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/libcharset>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/libcharset/include>
+	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+set_target_properties(
+	Charset
+	PROPERTIES
+	C_VISIBILITY_PRESET hidden
+	IMPORT_PREFIX lib
+	OUTPUT_NAME charset
+	POSITION_INDEPENDENT_CODE ON
+	PREFIX lib
+	SOVERSION ${LIBCHARSET_SOVERSION_MAJOR}
+	VERSION ${LIBCHARSET_SOVERSION}
+)
+
+if(MSVC)
+	if(BUILD_SHARED_LIBS)
+		set_target_properties(
+			Charset
+			PROPERTIES
+			DEBUG_POSTFIX _Debug
+		)
+	else()
+		set_target_properties(
+			Charset
+			PROPERTIES
+			DEBUG_POSTFIX _StaticDebug
+			MINSIZEREL_POSTFIX _Static
+			RELEASE_POSTFIX _Static
+			RELWITHDEBINFO_POSTFIX _Static
+		)
+	endif()
+endif()
+
+add_library(
+	Iconv
+	lib/aliases.h
+	lib/aliases_aix.h
+	lib/aliases_aix_sysaix.h
+	lib/aliases_dos.h
+	lib/aliases_extra.h
+	lib/aliases_osf1.h
+	lib/aliases_osf1_sysosf1.h
+	lib/aliases_sysaix.h
+	lib/aliases_syshpux.h
+	lib/aliases_sysosf1.h
+	lib/aliases_syssolaris.h
+	lib/aliases_zos.h
+	lib/canonical.h
+	lib/canonical_aix.h
+	lib/canonical_aix_sysaix.h
+	lib/canonical_dos.h
+	lib/canonical_extra.h
+	lib/canonical_local.h
+	lib/canonical_local_sysaix.h
+	lib/canonical_local_syshpux.h
+	lib/canonical_local_sysosf1.h
+	lib/canonical_local_syssolaris.h
+	lib/canonical_osf1.h
+	lib/canonical_osf1_sysosf1.h
+	lib/canonical_sysaix.h
+	lib/canonical_syshpux.h
+	lib/canonical_sysosf1.h
+	lib/canonical_syssolaris.h
+	lib/canonical_zos.h
+	lib/flags.h
+	lib/translit.h
+	${ICONV_PROJECT_PATH}/lib/converters.h
+	${ICONV_PROJECT_PATH}/lib/iconv.c
+	${ICONV_PROJECT_PATH}/lib/relocatable.c
+	${ICONV_PROJECT_PATH}/libcharset/lib/localcharset.c
+)
+
+target_compile_definitions(
+	Iconv
+	PRIVATE
+	BUILDING_LIBCHARSET
+	BUILDING_LIBICONV
+	HAVE_CONFIG_H
+	IN_LIBRARY
+	INSTALLDIR="${CMAKE_INSTALL_LIBDIR}"
+	LIBDIR="${CMAKE_INSTALL_LIBDIR}"
+	NO_XMALLOC
+	relocate=libiconv_relocate
+	relocate2=libiconv_relocate2
+	set_relocation_prefix=libiconv_set_relocation_prefix
+)
+
+if(BUILD_SHARED_LIBS)
+	target_compile_definitions(Iconv PRIVATE BUILDING_DLL)
+endif()
+
+target_include_directories(
+	Iconv
+	PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/lib>
+	$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+target_link_libraries(Iconv Charset)
+
+set_target_properties(
+	Iconv
+	PROPERTIES
+	C_VISIBILITY_PRESET hidden
+	IMPORT_PREFIX lib
+	OUTPUT_NAME iconv
+	POSITION_INDEPENDENT_CODE ON
+	PREFIX lib
+	SOVERSION ${LIBICONV_SOVERSION_MAJOR}
+	VERSION ${LIBICONV_SOVERSION}
+)
+
+if(MSVC)
+	if(BUILD_SHARED_LIBS)
+		set_target_properties(
+			Iconv
+			PROPERTIES
+			DEBUG_POSTFIX _Debug
+		)
+	else()
+		set_target_properties(
+			Iconv
+			PROPERTIES
+			DEBUG_POSTFIX _StaticDebug
+			MINSIZEREL_POSTFIX _Static
+			RELEASE_POSTFIX _Static
+			RELWITHDEBINFO_POSTFIX _Static
+		)
+	endif()
+endif()
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iconv RENAME libcharset.h COMPONENT development)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iconv RENAME localcharset.h COMPONENT development)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iconv RENAME iconv.h COMPONENT development)
+
+if(NOT CMAKE_VERSION VERSION_LESS 3.12)
+	install(
+		TARGETS Charset Iconv
+		EXPORT Iconv
+		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT development
+		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT runtime NAMELINK_COMPONENT development
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT runtime
+	)
+else()
+	install(
+		TARGETS Charset Iconv
+		EXPORT Iconv
+		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT development
+		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT runtime NAMELINK_SKIP
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT runtime
+	)
+	if(BUILD_SHARED_LIBS)
+		install(
+			TARGETS Charset Iconv
+			EXPORT Iconv
+			LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT development NAMELINK_ONLY
+		)
+	endif()
+endif()
+
+if(MSVC AND BUILD_SHARED_LIBS)
+	install(FILES $<TARGET_PDB_FILE:Charset> DESTINATION ${CMAKE_INSTALL_BINDIR} CONFIGURATIONS Debug RelWithDebInfo COMPONENT debug)
+	install(FILES $<TARGET_PDB_FILE:Iconv> DESTINATION ${CMAKE_INSTALL_BINDIR} CONFIGURATIONS Debug RelWithDebInfo COMPONENT debug)
+endif()
+
+if(LIBICONV_BUILD_DOCUMENTATION)
+	install(FILES man/iconv.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 COMPONENT documentation)
+	install(FILES man/iconv.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPONENT documentation)
+	install(FILES man/iconv_close.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPONENT documentation)
+	install(FILES man/iconv_open.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPONENT documentation)
+	install(FILES man/iconv_open_into.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPONENT documentation)
+	install(FILES man/iconvctl.3 DESTINATION ${CMAKE_INSTALL_MANDIR}/man3 COMPONENT documentation)
+	find_package(Man2html REQUIRED)
+	file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/man)
+	add_custom_command(OUTPUT man/iconv.1.html COMMAND man2html::man2html < ${CMAKE_CURRENT_SOURCE_DIR}/man/iconv.1 > ${CMAKE_CURRENT_BINARY_DIR}/man/iconv.1.html DEPENDS man/iconv.1)
+	add_custom_command(OUTPUT man/iconv.3.html COMMAND man2html::man2html < ${CMAKE_CURRENT_SOURCE_DIR}/man/iconv.3 > ${CMAKE_CURRENT_BINARY_DIR}/man/iconv.3.html DEPENDS man/iconv.3)
+	add_custom_command(OUTPUT man/iconv_close.3.html COMMAND man2html::man2html < ${CMAKE_CURRENT_SOURCE_DIR}/man/iconv_close.3 > ${CMAKE_CURRENT_BINARY_DIR}/man/iconv_close.3.html DEPENDS man/iconv_close.3)
+	add_custom_command(OUTPUT man/iconv_open.3.html COMMAND man2html::man2html < ${CMAKE_CURRENT_SOURCE_DIR}/man/iconv_open.3 > ${CMAKE_CURRENT_BINARY_DIR}/man/iconv_open.3.html DEPENDS man/iconv_open.3)
+	add_custom_command(OUTPUT man/iconv_open_into.3.html COMMAND man2html::man2html < ${CMAKE_CURRENT_SOURCE_DIR}/man/iconv_open_into.3 > ${CMAKE_CURRENT_BINARY_DIR}/man/iconv_open_into.3.html DEPENDS man/iconv_open_into.3)
+	add_custom_command(OUTPUT man/iconvctl.3.html COMMAND man2html::man2html < ${CMAKE_CURRENT_SOURCE_DIR}/man/iconvctl.3 > ${CMAKE_CURRENT_BINARY_DIR}/man/iconvctl.3.html DEPENDS man/iconvctl.3)
+	add_custom_target(html ALL DEPENDS man/iconv.1.html man/iconv.3.html man/iconv_close.3.html man/iconv_open.3.html man/iconv_open_into.3.html man/iconvctl.3.html)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/man/iconv.1.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libiconv COMPONENT documentation)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/man/iconv.3.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libiconv COMPONENT documentation)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/man/iconv_close.3.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libiconv COMPONENT documentation)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/man/iconv_open.3.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libiconv COMPONENT documentation)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/man/iconv_open_into.3.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libiconv COMPONENT documentation)
+	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/man/iconvctl.3.html DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/libiconv COMPONENT documentation)
+endif()
+
+export(
+	TARGETS Charset Iconv
+	NAMESPACE Iconv::
+	FILE ${CMAKE_CURRENT_BINARY_DIR}/iconv-export.cmake
+)
+
+configure_package_config_file(
+	iconv-config.cmake.in iconv-config.cmake
+	INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/iconv-${LIBICONV_VERSION}
+)
+
+install(
+	FILES ${CMAKE_CURRENT_BINARY_DIR}/iconv-config.cmake
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/iconv-${LIBICONV_VERSION}
+	COMPONENT development
+)
+
+write_basic_package_version_file(
+	${CMAKE_CURRENT_BINARY_DIR}/iconv-config-version.cmake
+	VERSION ${LIBICONV_VERSION}
+	COMPATIBILITY ExactVersion
+)
+
+install(
+	FILES ${CMAKE_CURRENT_BINARY_DIR}/iconv-config-version.cmake
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/iconv-${LIBICONV_VERSION}
+	COMPONENT development
+)
+
+install(
+	EXPORT Iconv
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/iconv-${LIBICONV_VERSION}
+	NAMESPACE Iconv::
+	FILE iconv-export.cmake
+	COMPONENT development
+)
+
+configure_file(${ICONV_PROJECT_PATH}/COPYING.LIB ${CMAKE_CURRENT_BINARY_DIR}/COPYING.LIB.txt COPYONLY)
+
+set(CPACK_COMPONENT_DEBUG_DISPLAY_NAME "Debug")
+set(CPACK_COMPONENT_DEVELOPMENT_DEPENDS runtime)
+set(CPACK_COMPONENT_DEVELOPMENT_DISPLAY_NAME "Development")
+set(CPACK_COMPONENT_DOCUMENTATION_DISPLAY_NAME "Documentation")
+set(CPACK_COMPONENT_RUNTIME_DISPLAY_NAME "Runtime")
+set(CPACK_DEB_COMPONENT_INSTALL ON)
+set(CPACK_DEBIAN_DEVELOPMENT_FILE_NAME "DEB-DEFAULT")
+set(CPACK_DEBIAN_DEVELOPMENT_PACKAGE_DEPENDS "${PACKAGE_TARNAME}")
+set(CPACK_DEBIAN_DEVELOPMENT_PACKAGE_NAME "${PACKAGE_TARNAME}-dev")
+set(CPACK_DEBIAN_DEVELOPMENT_PACKAGE_SECTION "libdevel")
+set(CPACK_DEBIAN_DOCUMENTATION_FILE_NAME "DEB-DEFAULT")
+set(CPACK_DEBIAN_DOCUMENTATION_PACKAGE_NAME "${PACKAGE_TARNAME}-doc")
+set(CPACK_DEBIAN_DOCUMENTATION_PACKAGE_SECTION "doc")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE ${PACKAGE_URL})
+set(CPACK_DEBIAN_PACKAGE_NAME ${PACKAGE_TARNAME})
+set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
+set(CPACK_DEBIAN_RUNTIME_FILE_NAME "DEB-DEFAULT")
+set(CPACK_DEBIAN_RUNTIME_PACKAGE_NAME "${PACKAGE_TARNAME}")
+set(CPACK_DEBIAN_RUNTIME_PACKAGE_SECTION "libs")
+set(CPACK_NSIS_PACKAGE_NAME ${PACKAGE_STRING})
+set(CPACK_NSIS_URL_INFO_ABOUT ${PACKAGE_URL})
+set(CPACK_PACKAGE_CONTACT ${PACKAGE_BUGREPORT})
+set(CPACK_PACKAGE_DISPLAY_NAME ${PACKAGE_STRING})
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "${PACKAGE_TARNAME}-${PACKAGE_VERSION}")
+set(CPACK_PACKAGE_NAME ${PACKAGE_TARNAME})
+set(CPACK_PACKAGE_VENDOR "GNU Project")
+set(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION})
+set(CPACK_PACKAGE_VERSION_MAJOR ${LIBICONV_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${LIBICONV_VERSION_MINOR})
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_BINARY_DIR}/COPYING.LIB.txt)
+set(CPACK_RPM_COMPONENT_INSTALL ON)
+set(CPACK_RPM_development_FILE_NAME "RPM-DEFAULT")
+set(CPACK_RPM_development_PACKAGE_NAME "${PACKAGE_TARNAME}-devel")
+set(CPACK_RPM_development_PACKAGE_REQUIRES "${PACKAGE_TARNAME}")
+set(CPACK_RPM_documentation_FILE_NAME "RPM-DEFAULT")
+set(CPACK_RPM_documentation_PACKAGE_GROUP "Documentation")
+set(CPACK_RPM_documentation_PACKAGE_NAME "${PACKAGE_TARNAME}-doc")
+set(CPACK_RPM_PACKAGE_GROUP "Development/Libraries")
+set(CPACK_RPM_PACKAGE_LICENSE "LGPL")
+set(CPACK_RPM_PACKAGE_NAME ${PACKAGE_TARNAME})
+set(CPACK_RPM_PACKAGE_URL ${PACKAGE_URL})
+set(CPACK_RPM_runtime_FILE_NAME "RPM-DEFAULT")
+set(CPACK_RPM_runtime_PACKAGE_NAME "${PACKAGE_TARNAME}")
+set(CPACK_WIX_PROPERTY_ARPHELPLINK ${PACKAGE_BUGREPORT})
+set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT ${PACKAGE_URL})
+
+include(CPack)

@@ -1,0 +1,6 @@
+[submodule "gperf"]
+	path = gperf
+	url = https://github.com/roboticslibrary/gperf.git
+[submodule "libiconv"]
+	path = libiconv
+	url = https://github.com/AiMiDi/libiconv.git
