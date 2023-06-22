@@ -422,9 +422,9 @@ if(MSVC)
 	endif()
 endif()
 
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iconv RENAME libcharset.h COMPONENT development)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iconv RENAME localcharset.h COMPONENT development)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iconv RENAME iconv.h COMPONENT development)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/libcharset.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME} RENAME libcharset.h COMPONENT development)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libcharset/include/localcharset.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME} RENAME localcharset.h COMPONENT development)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/iconv.h.inst DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME} RENAME iconv.h COMPONENT development)
 
 if(NOT CMAKE_VERSION VERSION_LESS 3.12)
 	install(
